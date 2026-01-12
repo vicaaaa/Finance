@@ -28,24 +28,26 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+    ]);
 
-        $user = User::create([
-    'name' => $request->name,
-    'email' => $request->email,
-    'password' => Hash::make($request->password),
-    'role_id' => 2, // <--- TAMBAHKAN INI (Asumsi ID 2 adalah 'User' atau 'Member')
-]);
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role_id' => 2, // Pastikan ini role untuk user biasa
+    ]);
 
-        event(new Registered($user));
+    event(new Registered($user));
 
-        Auth::login($user);
+    // BAGIAN INI YANG HARUS DIHAPUS/KOMENTAR:
+    // Auth::login($user); 
 
-        return redirect(route('dashboard', absolute: false));
-    }
+    // Ganti redirect-nya ke halaman login
+    return redirect()->route('login')->with('status', 'Pendaftaran berhasil! Silakan login dengan akun Anda.');
+}
 }

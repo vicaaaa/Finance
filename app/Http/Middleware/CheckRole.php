@@ -13,11 +13,16 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-   public function handle(Request $request, Closure $next, string $role): Response
+   // app/Http/Middleware/CheckRole.php
+
+public function handle(Request $request, Closure $next, string $role): Response
 {
-    if (!auth()->check() || auth()->user()->role->nama_role !== $role) {
-        abort(403, 'Anda tidak memiliki akses ke halaman ini.');
-    }
+    // Kita tambahkan tanda tanya (?) atau pengecekan null
+    // Tambahkan tanda tanya (?) setelah user()->role
+if (!auth()->check() || auth()->user()->role?->nama_role !== $role) {
+    abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+}
+
     return $next($request);
 }
 }

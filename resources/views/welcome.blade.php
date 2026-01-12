@@ -25,7 +25,7 @@
         <h1 class="text-4xl font-bold text-gray-900 mb-2">
             Finance<span class="text-blue-600">App</span>
         </h1>
-        <p class="text-gray-500 mb-10 text-lg">Solusi Manajemen Keuangan Modern</p>
+        <p class="text-gray-500 mb-10 text-lg"></p>
 
         <div class="space-y-4">
             
@@ -38,24 +38,11 @@
                     Daftar Akun
                 </a>
             </div>
-
-            <div class="flex justify-center">
-                <a href="{{ url('/dashboard') }}" class="w-full sm:w-80 bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-3 px-6 rounded-full transition duration-300 text-center">
-                    Ke Dashboard
-                </a>
-            </div>
-
-            @auth
-            <div class="mt-4 text-sm text-gray-400 italic">
-                Halo, {{ Auth::user()->name }}! Anda sedang masuk.
-            </div>
-            @endauth
-
-        </div>
-
-        <footer class="mt-20 text-gray-400 text-sm italic">
-            &copy; 2026 FinanceApp. All rights reserved.
-        </footer>
+            
+            <footer class="absolute bottom-10 w-full text-center text-gray-400 text-sm">
+        &copy; 2026 FinanceApp. All rights reserved.
+    </footer>
+        
     </div>
 
 </body>

@@ -9,14 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('tabungans', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
-
+public function up(): void
+{
+    Schema::create('tabungans', function (Blueprint $table) {
+        $table->id();
+        // PASTIKAN BARIS INI ADA:
+        $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+        $table->decimal('nominal', 15, 2);
+        $table->string('keterangan')->nullable();
+        $table->timestamps();
+    });
+}
     /**
      * Reverse the migrations.
      */
