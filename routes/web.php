@@ -13,25 +13,20 @@ Route::get('/', function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     
-    // Kamu bisa tambah route admin lain di sini, misal:
-    // Route::resource('/admin/jenis-pengeluaran', JenisPengeluaranController::class);
 });
-
-/// ... (bagian atas biarkan sama sampai group admin)
 
 // --- GROUP KHUSUS USER (DIPERBAIKI) ---
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/dashboard', function () {
-        // Ambil query dasar tabungan user yang sedang login
+    
         $query = \App\Models\Tabungan::where('user_id', auth()->id()); 
         
-        // 1. Ambil semua data untuk tabel riwayat
+        // 1. data untuk tabel riwayat
         $tabungans = $query->latest()->get();
         
         // 2. Hitung total nominal untuk kartu saldo
         $totalSaldo = $query->sum('nominal'); 
 
-        // 3. Kirim kedua variabel (tabungans dan totalSaldo) ke view
         return view('dashboard', compact('tabungans', 'totalSaldo'));
     })->name('dashboard');
 
